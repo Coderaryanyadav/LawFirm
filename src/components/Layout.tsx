@@ -3,42 +3,73 @@ import { Link, useLocation } from 'react-router-dom';
 import { content } from '../data/content';
 import type { Language } from '../data/content';
 import { TopBar } from './TopBar';
+import { TriageModal } from './TriageModal';
 
 export const Layout = ({ children, lang, setLang }: { children: React.ReactNode, lang: Language, setLang: (l: Language) => void }) => {
     const t = content[lang];
     const location = useLocation();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isTriageOpen, setIsTriageOpen] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         setMobileMenuOpen(false);
     }, [location.pathname]);
 
+    // Command Center Keyboard Shortcut (Cmd+K)
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                setIsTriageOpen(true);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     return (
         <div className="app-wrapper">
             <TopBar lang={lang} />
+            <TriageModal isOpen={isTriageOpen} onClose={() => setIsTriageOpen(false)} lang={lang} />
 
             {/* Navbar */}
             <nav className="navbar">
                 <div className="container nav-inner">
-                    <Link to="/" className="nav-brand" data-cursor="Home">
+                    <Link to="/" className="nav-brand">
                         <div className="brand-main">{t.brand}</div>
                         <div className="brand-sub">{t.nav.lawyers}</div>
                     </Link>
 
                     <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-                        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} data-cursor="Home">{t.nav.home}</Link>
-                        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} data-cursor="About">{t.nav.about}</Link>
-                        <Link to="/lawyers" className={`nav-link ${location.pathname === '/lawyers' ? 'active' : ''}`} data-cursor="Experts">{t.nav.lawyers}</Link>
-                        <Link to="/practice-areas" className={`nav-link ${location.pathname === '/practice-areas' ? 'active' : ''}`} data-cursor="Services">{t.nav.practice}</Link>
-                        <Link to="/blogs" className={`nav-link ${location.pathname === '/blogs' ? 'active' : ''}`} data-cursor="Read">{t.nav.blogs}</Link>
-                        <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} data-cursor="Contact">{t.nav.contact}</Link>
+                        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>{t.nav.home}</Link>
+                        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>{t.nav.about}</Link>
+                        <Link to="/lawyers" className={`nav-link ${location.pathname === '/lawyers' ? 'active' : ''}`}>{t.nav.lawyers}</Link>
+                        <Link to="/practice-areas" className={`nav-link ${location.pathname === '/practice-areas' ? 'active' : ''}`}>{t.nav.practice}</Link>
+                        <Link to="/blogs" className={`nav-link ${location.pathname === '/blogs' ? 'active' : ''}`}>{t.nav.blogs}</Link>
+                        <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>{t.nav.contact}</Link>
 
                         <div className="lang-switch">
                             <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</button>
                             <span style={{ color: 'var(--border-color)' }}>|</span>
                             <button className={`lang-btn ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')}>عربي</button>
                         </div>
+
+                        <button
+                            onClick={() => setIsTriageOpen(true)}
+                            style={{
+                                background: '#000',
+                                color: '#fff',
+                                padding: '0.8rem 1.5rem',
+                                fontSize: '0.8rem',
+                                fontWeight: 700,
+                                letterSpacing: '1px',
+                                border: '1px solid #333',
+                                marginLeft: '1rem'
+                            }}
+                        >
+                            {lang === 'ar' ? 'احجز الآن' : 'BOOK NOW'}
+                        </button>
                     </div>
                 </div>
             </nav>
@@ -59,11 +90,11 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
                         <div>
                             <h3 className="footer-heading" style={{ color: '#ffffff', marginBottom: '2rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Links</h3>
                             <ul className="footer-links" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                <li><Link to="/about" data-cursor="About" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>About Us</span> <span>&rarr;</span></Link></li>
-                                <li><Link to="/lawyers" data-cursor="Experts" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Lawyers</span> <span>&rarr;</span></Link></li>
-                                <li><Link to="/contact" data-cursor="Consult" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Book Your Consultation</span> <span>&rarr;</span></Link></li>
-                                <li><Link to="/practice-areas" data-cursor="Services" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Areas Of Practice</span> <span>&rarr;</span></Link></li>
-                                <li><Link to="/blogs" data-cursor="Read" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Legal Blogs</span> <span>&rarr;</span></Link></li>
+                                <li><Link to="/about" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>About Us</span> <span>&rarr;</span></Link></li>
+                                <li><Link to="/lawyers" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Lawyers</span> <span>&rarr;</span></Link></li>
+                                <li><button onClick={() => setIsTriageOpen(true)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease', width: '100%', cursor: 'pointer' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Book Your Consultation</span> <span>&rarr;</span></button></li>
+                                <li><Link to="/practice-areas" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Areas Of Practice</span> <span>&rarr;</span></Link></li>
+                                <li><Link to="/blogs" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Legal Blogs</span> <span>&rarr;</span></Link></li>
                             </ul>
                         </div>
 
@@ -79,7 +110,7 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
                                 ].map((srv, i) => (
                                     <li key={i}>
                                         <Link to="/practice-areas" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}>
-                                            <span data-cursor="Open">{srv}</span> <span>&rarr;</span>
+                                            <span>{srv}</span> <span>&rarr;</span>
                                         </Link>
                                     </li>
                                 ))}

@@ -17,7 +17,6 @@ const staggerContainer: Variants = {
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
 };
 
-// Custom Luxury Select Component
 const LuxurySelect = ({ label, value, options, onChange }: { label: string, value: string, options: string[], onChange: (v: string) => void }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -35,7 +34,7 @@ const LuxurySelect = ({ label, value, options, onChange }: { label: string, valu
                     alignItems: 'center'
                 }}
             >
-                <span style={{ color: '#fff', fontSize: '1.1rem' }}>{value === 'All' ? `All ${label}s` : value}</span>
+                <span style={{ color: '#fff', fontSize: '1rem' }}>{value === 'All' ? `All ${label}s` : value}</span>
                 <span style={{ color: 'rgba(255,255,255,0.3)', transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}>&darr;</span>
             </div>
 
@@ -43,7 +42,7 @@ const LuxurySelect = ({ label, value, options, onChange }: { label: string, valu
                 {isOpen && (
                     <>
                         <div
-                            style={{ position: 'fixed', inset: 0, zIndex: 90 }}
+                            style={{ position: 'fixed', inset: 0, zIndex: 1000 }}
                             onClick={() => setIsOpen(false)}
                         />
                         <motion.div
@@ -57,9 +56,11 @@ const LuxurySelect = ({ label, value, options, onChange }: { label: string, valu
                                 right: 0,
                                 background: '#111',
                                 border: '1px solid #222',
-                                zIndex: 100,
+                                zIndex: 1001,
                                 marginTop: '0.5rem',
-                                padding: '1rem 0'
+                                padding: '1rem 0',
+                                maxHeight: '300px',
+                                overflowY: 'auto'
                             }}
                         >
                             {options.map(opt => (
@@ -71,7 +72,7 @@ const LuxurySelect = ({ label, value, options, onChange }: { label: string, valu
                                         color: value === opt ? '#fff' : 'rgba(255,255,255,0.5)',
                                         cursor: 'pointer',
                                         background: value === opt ? '#1a1a1a' : 'transparent',
-                                        fontSize: '0.9rem'
+                                        fontSize: '0.85rem'
                                     }}
                                     onMouseOver={(e) => e.currentTarget.style.background = '#1a1a1a'}
                                     onMouseOut={(e) => e.currentTarget.style.background = value === opt ? '#1a1a1a' : 'transparent'}
@@ -108,30 +109,26 @@ export const Lawyers = ({ lang }: { lang: Language }) => {
 
     return (
         <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ background: '#000' }}>
-            <div className="page-header" style={{ padding: '8rem 0', background: '#000', borderBottom: '1px solid #222' }}>
+            <div className="page-header">
                 <div className="container" style={{ textAlign: 'center' }}>
-                    <motion.h1 className="page-title" variants={fadeInUp} style={{ marginBottom: '1.5rem', fontSize: '4rem', color: '#fff' }}>{t.nav.lawyers}</motion.h1>
-                    <motion.p variants={fadeInUp} style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '700px', margin: '0 auto', fontSize: '1.25rem', lineHeight: 1.8 }}>
-                        {lang === 'ar' ? 'فريق من الخبراء القانونيين المتميزين مكرسون لحماية مصالحك.' : 'A team of distinguished legal experts dedicated to protecting your interests through aggressive advocacy and elite expertise.'}
+                    <motion.span variants={fadeInUp} style={{ color: '#fff', opacity: 0.4, letterSpacing: '8px', fontSize: '0.7rem', textTransform: 'uppercase', marginBottom: '1.5rem', display: 'block' }}>Elite Advocates</motion.span>
+                    <motion.h1 className="page-title" variants={fadeInUp}>{t.nav.lawyers}</motion.h1>
+                    <motion.p variants={fadeInUp} style={{ color: 'rgba(255,255,255,0.4)', maxWidth: '750px', margin: '0 auto', fontSize: '1.1rem', lineHeight: 1.8 }}>
+                        {lang === 'ar' ? 'فريق من الخبراء القانونيين المتميزين مكرسون لحماية مصالحك من خلال الدفاع القوي والخبرة النخبوية.' : 'A team of distinguished legal experts dedicated to protecting your interests through aggressive advocacy and elite expertise.'}
                     </motion.p>
                 </div>
             </div>
 
             {/* Search Filters Section */}
-            <section className="search-section" style={{ padding: '4rem 0', background: '#0a0a0a', borderBottom: '1px solid #222', position: 'relative', zIndex: 10 }}>
+            <section style={{ padding: '4rem 0', background: '#0a0a0a', borderBottom: '1px solid #111', position: 'relative', zIndex: 100 }}>
                 <div className="container">
-                    <div className="search-grid" style={{
-                        display: 'grid',
-                        gridTemplateColumns: '2fr 1fr 1fr 0.5fr',
-                        gap: '1.8rem',
-                        alignItems: 'end'
-                    }}>
-                        <div className="search-group">
+                    <div className="grid grid-cols-4" style={{ alignItems: 'end', gap: '2.5rem' }}>
+                        <div className="search-group" style={{ gridColumn: 'span 1' }}>
                             <label style={{ display: 'block', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem' }}>Search Lawyers</label>
                             <div style={{ position: 'relative' }}>
                                 <input
                                     type="text"
-                                    placeholder="Search by name or expertise..."
+                                    placeholder="Name or Expertise..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     style={{
@@ -141,11 +138,11 @@ export const Lawyers = ({ lang }: { lang: Language }) => {
                                         borderBottom: '1px solid #333',
                                         color: '#fff',
                                         padding: '1rem 0',
-                                        fontSize: '1.1rem',
+                                        fontSize: '1rem',
                                         outline: 'none'
                                     }}
                                 />
-                                <div style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)' }}>
+                                <div style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.2)' }}>
                                     <SearchIcon />
                                 </div>
                             </div>
@@ -154,40 +151,23 @@ export const Lawyers = ({ lang }: { lang: Language }) => {
                         <LuxurySelect label="Practice Area" value={practiceArea} options={practiceAreas} onChange={setPracticeArea} />
                         <LuxurySelect label="Office Location" value={officeLocation} options={offices} onChange={setOfficeLocation} />
 
-                        <button
-                            className="btn"
-                            style={{
-                                width: '100%',
-                                background: '#fff',
-                                color: '#000',
-                                height: '54px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: 700,
-                                fontSize: '0.8rem',
-                                letterSpacing: '1px'
-                            }}
-                        >
-                            SEARCH
-                        </button>
+                        <button className="btn" style={{ width: '100%', height: '54px' }}>SEARCH</button>
                     </div>
                 </div>
             </section>
 
-            <section className="section" style={{ padding: '0' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: 0 }}>
+            <section style={{ padding: '0', background: '#000' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gap: 0 }}>
                     {filteredLawyers.map((law) => (
                         <Link to={`/lawyer/${law.id}`} key={law.id} style={{ textDecoration: 'none' }}>
                             <motion.div
-                                data-cursor="View Profile"
                                 variants={fadeInUp}
                                 style={{
-                                    height: '80vh',
+                                    height: '75vh',
                                     position: 'relative',
                                     overflow: 'hidden',
-                                    borderRight: '1px solid #222',
-                                    borderBottom: '1px solid #222'
+                                    borderRight: '1px solid #111',
+                                    borderBottom: '1px solid #111'
                                 }}
                                 whileHover="hover"
                             >
@@ -198,37 +178,35 @@ export const Lawyers = ({ lang }: { lang: Language }) => {
                                         backgroundImage: `url(${law.img})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
-                                        filter: 'grayscale(100%) brightness(0.7)',
+                                        filter: 'grayscale(100%) brightness(0.6)',
                                     }}
                                     variants={{
-                                        hover: { scale: 1.1, filter: 'grayscale(0%) brightness(1)' }
+                                        hover: { scale: 1.05, filter: 'grayscale(0%) brightness(1)' }
                                     }}
                                     transition={{ duration: 0.8 }}
                                 />
 
-                                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.95), transparent 60%)' }} />
+                                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%)' }} />
 
                                 <div style={{ position: 'absolute', bottom: '10%', left: '10%', right: '10%', color: '#fff', textAlign: lang === 'ar' ? 'right' : 'left' }}>
                                     <motion.div
                                         variants={{ hover: { y: -10 } }}
-                                        style={{ borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '1rem', marginBottom: '1rem' }}
+                                        style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}
                                     >
-                                        <h3 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', color: '#fff' }}>{law.name[lang]}</h3>
-                                        <p style={{ color: '#fff', opacity: 0.6, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 700 }}>{law.role[lang]}</p>
+                                        <h3 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', color: '#fff', fontFamily: 'serif' }}>{law.name[lang]}</h3>
+                                        <p style={{ color: '#fff', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '3px', fontSize: '0.75rem', fontWeight: 700 }}>{law.role[lang]}</p>
                                     </motion.div>
 
                                     <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        variants={{ hover: { opacity: 1, height: 'auto' } }}
-                                        style={{ overflow: 'hidden' }}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        variants={{ hover: { opacity: 1, y: 0 } }}
+                                        style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.9rem', color: 'rgba(255,255,255,0.5)' }}
                                     >
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                                <MailIcon /> {law.email}
-                                            </div>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                                <PhoneIcon /> {law.phone}
-                                            </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                                            <MailIcon /> {law.email}
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                                            <PhoneIcon /> {law.phone}
                                         </div>
                                     </motion.div>
                                 </div>
@@ -238,12 +216,13 @@ export const Lawyers = ({ lang }: { lang: Language }) => {
                 </div>
             </section>
 
-            <section className="section" style={{ background: '#fff', color: '#000', padding: '10rem 0', textAlign: 'center' }}>
+            <section style={{ background: '#fff', color: '#000', padding: '12rem 0', textAlign: 'center' }}>
                 <div className="container">
-                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                        <h2 style={{ fontSize: '3rem', marginBottom: '3rem' }}>Ready to work with the best?</h2>
-                        <Link to="/contact" data-cursor="Now" className="btn" style={{ background: '#000', color: '#fff', padding: '1.5rem 4rem' }}>
-                            Start Your Consultation
+                    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+                        <span style={{ fontSize: '0.8rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '2rem', display: 'block', opacity: 0.5 }}>Strategic Advocacy</span>
+                        <h2 style={{ fontSize: '4.5rem', marginBottom: '4rem', fontWeight: 500, letterSpacing: '-2px' }}>Legal Representation <br />At The Highest Level.</h2>
+                        <Link to="/contact" className="btn" style={{ background: '#000', color: '#fff', padding: '1.5rem 4rem' }}>
+                            SECURE CONSULTATION
                         </Link>
                     </motion.div>
                 </div>

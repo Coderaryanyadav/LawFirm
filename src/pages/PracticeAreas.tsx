@@ -6,7 +6,7 @@ import { LawGlobeIcon } from '../components/Icons';
 
 const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
 };
 
 const staggerContainer: Variants = {
@@ -16,8 +16,6 @@ const staggerContainer: Variants = {
 
 export const PracticeAreas = ({ lang }: { lang: Language }) => {
     const t = content[lang];
-
-    // Abstract premium photos for each practice area category
     const practiceImages = [
         "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80", // Real Estate
         "https://images.unsplash.com/photo-1576086208088-251fdf3b05b9?auto=format&fit=crop&q=80", // Family
@@ -28,81 +26,80 @@ export const PracticeAreas = ({ lang }: { lang: Language }) => {
     ];
 
     return (
-        <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
-            <div className="page-header" style={{ padding: '6rem 0' }}>
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <motion.h1 className="page-title" variants={fadeInUp} style={{ marginBottom: '1rem' }}>{t.expertise.titleSub}</motion.h1>
-                    <motion.p variants={fadeInUp} style={{ color: 'rgba(255,255,255,0.8)', maxWidth: '600px', margin: '0 auto', fontSize: '1.2rem' }}>
-                        {t.expertise.title}
-                    </motion.p>
+        <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ background: '#000' }}>
+            <div className="page-header" style={{ height: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', position: 'relative', overflow: 'hidden' }}>
+                <motion.div
+                    initial={{ scale: 1.2, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 0.3 }}
+                    transition={{ duration: 2 }}
+                    style={{ position: 'absolute', inset: 0, backgroundImage: 'url("https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&q=80")', backgroundSize: 'cover', backgroundPosition: 'center' }}
+                />
+                <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
+                    <motion.span variants={fadeInUp} style={{ color: '#fff', opacity: 0.5, letterSpacing: '8px', fontSize: '0.8rem', textTransform: 'uppercase', marginBottom: '2rem', display: 'block' }}>Specialized Excellence</motion.span>
+                    <motion.h1 className="page-title" variants={fadeInUp} style={{ marginBottom: '1.5rem', fontSize: 'clamp(3rem, 8vw, 6rem)', color: '#fff', fontWeight: 600 }}>{t.expertise.titleSub}</motion.h1>
+                    <div style={{ width: '40px', height: '2px', background: '#fff', margin: '0 auto' }} />
                 </div>
             </div>
-            <section className="section bg-light" style={{ background: 'var(--bg-color)' }}>
-                <div className="container">
-                    <motion.div className="grid grid-cols-3" style={{ gap: '2rem' }} variants={staggerContainer}>
-                        {t.expertise.items.map((item, i) => (
+
+            <section style={{ padding: 0 }}>
+                {t.expertise.items.map((item, i) => (
+                    <div key={i} style={{ minHeight: '100vh', display: 'flex', borderBottom: '1px solid #111' }}>
+                        <div className="grid grid-cols-2" style={{ width: '100%', gap: 0 }}>
+                            {/* Text Content */}
                             <motion.div
-                                key={i}
-                                variants={{
-                                    hidden: { opacity: 0, y: 30 },
-                                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-                                    hover: { y: -10, boxShadow: '0 20px 40px rgba(0,0,0,0.2)' },
-                                    rest: { y: 0, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }
-                                }}
+                                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
                                 style={{
-                                    position: 'relative',
-                                    height: '380px',
-                                    borderRadius: '12px',
-                                    overflow: 'hidden',
-                                    cursor: 'pointer',
+                                    padding: '10% 15%',
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    justifyContent: 'flex-end',
+                                    justifyContent: 'center',
+                                    order: i % 2 === 0 ? 1 : 2,
+                                    background: '#0a0a0a',
+                                    color: '#fff'
                                 }}
-                                initial="hidden"
-                                animate="visible"
-                                whileHover="hover"
                             >
-                                <motion.div style={{
-                                    position: 'absolute',
-                                    inset: 0,
-                                    backgroundImage: `url(${practiceImages[i]})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    zIndex: 0
-                                }}
-                                    variants={{
-                                        rest: { scale: 1 },
-                                        hover: { scale: 1.1, transition: { duration: 0.6, ease: "easeOut" } }
+                                <span style={{ fontFamily: 'serif', fontSize: '4rem', opacity: 0.05, marginBottom: '1rem' }}>0{i + 1}</span>
+                                <h3 style={{ fontSize: '3rem', marginBottom: '2rem', fontWeight: 500 }}>{item.title}</h3>
+                                <p style={{ fontSize: '1.2rem', lineHeight: 2, color: 'rgba(255,255,255,0.6)', marginBottom: '3rem' }}>{item.desc}</p>
+                                <motion.button
+                                    whileHover={{ x: 10 }}
+                                    style={{ alignSelf: 'flex-start', color: '#fff', fontSize: '0.9rem', letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: '1rem', fontWeight: 700 }}
+                                >
+                                    EXPLORE SERVICE <div style={{ width: '30px', height: '1px', background: '#fff' }} />
+                                </motion.button>
+                            </motion.div>
+
+                            {/* Image Part */}
+                            <div style={{ order: i % 2 === 0 ? 2 : 1, overflow: 'hidden' }}>
+                                <motion.div
+                                    initial={{ scale: 1.3 }}
+                                    whileInView={{ scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 1.5 }}
+                                    style={{
+                                        height: '100%',
+                                        backgroundImage: `url(${practiceImages[i]})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        filter: 'grayscale(100%) contrast(1.1)'
                                     }}
                                 />
-                                <div style={{
-                                    position: 'absolute',
-                                    inset: 0,
-                                    background: 'linear-gradient(to top, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 50%, rgba(10, 25, 47, 0.1) 100%)',
-                                    zIndex: 1
-                                }} />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </section>
 
-                                <div style={{ position: 'relative', zIndex: 2, padding: '2.5rem', color: '#fff' }}>
-                                    <div style={{ color: 'var(--primary)', marginBottom: '1rem' }}><LawGlobeIcon /></div>
-                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff' }}>{item.title}</h3>
-
-                                    <motion.div variants={{
-                                        rest: { opacity: 0.8, height: '3.6rem', overflow: 'hidden' }, // Approx 2 lines
-                                        hover: { opacity: 1, height: 'auto' }
-                                    }} style={{ fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                                        {item.desc}
-                                    </motion.div>
-
-                                    <motion.div variants={{
-                                        rest: { opacity: 0, y: 10 },
-                                        hover: { opacity: 1, y: 0 }
-                                    }} style={{ color: 'var(--primary)', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                        {item.more} <span>&rarr;</span>
-                                    </motion.div>
-                                </div>
-                            </motion.div>
-                        ))}
+            <section className="section" style={{ background: '#fff', color: '#000', padding: '10rem 0', textAlign: 'center' }}>
+                <div className="container">
+                    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+                        <p style={{ letterSpacing: '4px', fontSize: '0.8rem', marginBottom: '2rem', color: '#666' }}>TAILORED LEGAL SOLUTIONS</p>
+                        <h2 style={{ fontSize: '4rem', marginBottom: '4rem', fontWeight: 500 }}>Need a Specialized Assessment?</h2>
+                        <button className="btn" style={{ background: '#000', color: '#fff', padding: '1.5rem 4rem' }}>
+                            START TRIAGE ASSESSMENT
+                        </button>
                     </motion.div>
                 </div>
             </section>
