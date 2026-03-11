@@ -132,6 +132,14 @@ button {
   padding: 6rem 0;
 }
 
+.bg-offset {
+  background-color: var(--bg-offset);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
 .text-center {
   text-align: center;
 }
@@ -323,7 +331,7 @@ button {
 .top-item svg {
   width: 14px;
   height: 14px;
-  color: var(--primary);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .top-socials {
@@ -360,21 +368,24 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 3rem;
 }
 
 /* BRAND */
 .nav-brand {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 .brand-main {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: var(--secondary) !important;
   font-weight: 700;
   letter-spacing: 1px;
   white-space: nowrap;
+  line-height: 1.2;
 }
 
 /* alias: brand-title maps to brand-main styles */
@@ -413,12 +424,12 @@ button {
 /* NAV LINKS */
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.8rem;
   align-items: center;
 }
 
 .nav-link {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--secondary) !important;
   text-transform: uppercase;
@@ -556,6 +567,8 @@ button {
   color: #fff;
   margin-bottom: 1.5rem;
   line-height: 1.1;
+  font-style: italic;
+  font-weight: 400;
 }
 
 .hero-desc {

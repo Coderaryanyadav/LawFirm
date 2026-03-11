@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { MailIcon, PhoneIcon } from './Icons';
 
 interface TriageModalProps {
     isOpen: boolean;
