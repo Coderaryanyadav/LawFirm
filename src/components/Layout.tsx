@@ -21,18 +21,18 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
             {/* Navbar */}
             <nav className="navbar">
                 <div className="container nav-inner">
-                    <Link to="/" className="nav-brand">
+                    <Link to="/" className="nav-brand" data-cursor="Home">
                         <div className="brand-main">{t.brand}</div>
                         <div className="brand-sub">{t.nav.lawyers}</div>
                     </Link>
 
                     <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-                        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>{t.nav.home}</Link>
-                        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>{t.nav.about}</Link>
-                        <Link to="/lawyers" className={`nav-link ${location.pathname === '/lawyers' ? 'active' : ''}`}>{t.nav.lawyers}</Link>
-                        <Link to="/practice-areas" className={`nav-link ${location.pathname === '/practice-areas' ? 'active' : ''}`}>{t.nav.practice}</Link>
-                        <Link to="/blogs" className={`nav-link ${location.pathname === '/blogs' ? 'active' : ''}`}>{t.nav.blogs}</Link>
-                        <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>{t.nav.contact}</Link>
+                        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} data-cursor="Home">{t.nav.home}</Link>
+                        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} data-cursor="About">{t.nav.about}</Link>
+                        <Link to="/lawyers" className={`nav-link ${location.pathname === '/lawyers' ? 'active' : ''}`} data-cursor="Experts">{t.nav.lawyers}</Link>
+                        <Link to="/practice-areas" className={`nav-link ${location.pathname === '/practice-areas' ? 'active' : ''}`} data-cursor="Services">{t.nav.practice}</Link>
+                        <Link to="/blogs" className={`nav-link ${location.pathname === '/blogs' ? 'active' : ''}`} data-cursor="Read">{t.nav.blogs}</Link>
+                        <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} data-cursor="Contact">{t.nav.contact}</Link>
 
                         <div className="lang-switch">
                             <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</button>
@@ -47,35 +47,66 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
                 {children}
             </main>
 
-            {/* Footer */}
-            <footer className="footer">
+            {/* Footer - High End Black & White Theme */}
+            <footer className="footer" style={{ padding: '6rem 0 3rem 0', background: '#000000', color: '#ffffff', borderTop: 'none' }}>
                 <div className="container">
-                    <div className="grid grid-cols-3 mb-12">
+                    <div className="grid grid-cols-4 mb-12" style={{ gap: '3rem' }}>
                         <div>
-                            <h2 className="footer-heading" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', color: 'var(--primary)', marginBottom: '1rem' }}>{t.brand}</h2>
-                            <p>{t.footer.desc}</p>
+                            <h2 className="footer-heading" style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', color: '#ffffff', marginBottom: '1.5rem', letterSpacing: '1px' }}>{t.brand}</h2>
+                            <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>{t.footer.desc}</p>
                         </div>
+
                         <div>
-                            <h3 className="footer-heading">{t.footer.navTitle}</h3>
-                            <ul className="footer-links">
-                                <li><Link to="/about">{t.nav.about}</Link></li>
-                                <li><Link to="/lawyers">{t.nav.lawyers}</Link></li>
-                                <li><Link to="/practice-areas">{t.nav.practice}</Link></li>
-                                <li><Link to="/blogs">{t.nav.blogs}</Link></li>
-                                <li><Link to="/terms">{t.nav.terms}</Link></li>
+                            <h3 className="footer-heading" style={{ color: '#ffffff', marginBottom: '2rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Links</h3>
+                            <ul className="footer-links" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                <li><Link to="/about" data-cursor="About" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>About Us</span> <span>&rarr;</span></Link></li>
+                                <li><Link to="/lawyers" data-cursor="Experts" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Lawyers</span> <span>&rarr;</span></Link></li>
+                                <li><Link to="/contact" data-cursor="Consult" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Book Your Consultation</span> <span>&rarr;</span></Link></li>
+                                <li><Link to="/practice-areas" data-cursor="Services" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Areas Of Practice</span> <span>&rarr;</span></Link></li>
+                                <li><Link to="/blogs" data-cursor="Read" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Legal Blogs</span> <span>&rarr;</span></Link></li>
                             </ul>
                         </div>
+
                         <div>
-                            <h3 className="footer-heading">{t.footer.servicesTitle}</h3>
-                            <ul className="footer-links">
-                                {t.footer.services.map((srv, i) => <li key={i}><Link to="/practice-areas">{srv}</Link></li>)}
+                            <h3 className="footer-heading" style={{ color: '#ffffff', marginBottom: '2rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Our Services</h3>
+                            <ul className="footer-links" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                {[
+                                    "Enforcement Of Judgments",
+                                    "Bankruptcy Cases",
+                                    "Insolvency Cases",
+                                    "Business Issues",
+                                    "Criminal Cases"
+                                ].map((srv, i) => (
+                                    <li key={i}>
+                                        <Link to="/practice-areas" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}>
+                                            <span data-cursor="Open">{srv}</span> <span>&rarr;</span>
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
+                        </div>
+
+                        <div>
+                            <h3 className="footer-heading" style={{ color: '#ffffff', marginBottom: '2rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Contact Us</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    <span dir="ltr" style={{ color: '#fff', fontSize: '1.2rem' }}>+971 56 406 6060</span>
+                                    <span style={{}}>support@lawservices.ae</span>
+                                </div>
+                                <div>
+                                    <p style={{ margin: 0, lineHeight: 1.6 }}>Dubai, Deira, Port Said, Building Business Point</p>
+                                </div>
+                                <div>
+                                    <p style={{ margin: 0, lineHeight: 1.6 }}>Sharjah, Al Mamzar Corniche Street, Tower of India</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="footer-bottom">
+
+                    <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.5)' }}>
                         <div>{t.footer.rights}</div>
-                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                            <span style={{ padding: '0.3rem 0.8rem', background: '#111', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600 }}>{t.footer.bubble}</span>
+                        <div>
+                            <span style={{ padding: '0.4rem 1rem', background: '#ffffff', color: '#000000', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase' }}>{t.footer.bubble}</span>
                         </div>
                     </div>
                 </div>

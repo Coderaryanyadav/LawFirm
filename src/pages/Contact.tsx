@@ -1,5 +1,8 @@
+import { useState, useRef } from 'react';
+import type { FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { content } from '../data/content';
 import type { Language } from '../data/content';
 import { MapPinIcon, PhoneIcon } from '../components/Icons';
@@ -16,6 +19,33 @@ const staggerContainer: Variants = {
 
 export const Contact = ({ lang }: { lang: Language }) => {
     const t = content[lang];
+    const form = useRef<HTMLFormElement>(null);
+    const [sending, setSending] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+    const sendEmail = (e: FormEvent) => {
+        e.preventDefault();
+
+        if (!form.current) return;
+
+        setSending(true);
+        setStatus('idle');
+
+        // Note: These are public dummy keys. User will need to replace with their own from emailjs.com
+        emailjs.sendForm('service_lawfirm_dummy', 'template_lawfirm_dummy', form.current, 'public_key_dummy')
+            .then(() => {
+                setStatus('success');
+                form.current?.reset();
+            })
+            .catch((error) => {
+                console.error("EmailJS Error:", error);
+                setStatus('error');
+            })
+            .finally(() => {
+                setSending(false);
+            });
+    };
+
     return (
         <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
             <div className="page-header">
@@ -29,16 +59,29 @@ export const Contact = ({ lang }: { lang: Language }) => {
                     <div className="grid grid-cols-2" style={{ gap: '5rem' }}>
                         <motion.div variants={fadeInUp}>
                             <h2 className="section-title">{t.contact.title}</h2>
-                            <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <form ref={form} onSubmit={sendEmail} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                                 <div className="grid grid-cols-2" style={{ gap: '1.5rem' }}>
-                                    <input type="text" placeholder={t.contact.form.name} required />
-                                    <input type="email" placeholder={t.contact.form.email} required />
+                                    <input type="text" name="user_name" placeholder={t.contact.form.name} required />
+                                    <input type="email" name="user_email" placeholder={t.contact.form.email} required />
                                 </div>
-                                <input type="tel" placeholder={t.contact.form.phone} />
-                                <input type="text" placeholder={t.contact.form.subject} />
-                                <textarea placeholder={t.contact.form.message} rows={5} required></textarea>
-                                <div className="mb-2"></div>
-                                <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start' }}>{t.contact.form.submit}</button>
+                                <input type="tel" name="user_phone" placeholder={t.contact.form.phone} />
+                                <input type="text" name="subject" placeholder={t.contact.form.subject} />
+                                <textarea name="message" placeholder={t.contact.form.message} rows={5} required></textarea>
+
+                                {status === 'success' && (
+                                    <div style={{ padding: '1rem', background: '#d4edda', color: '#155724', borderRadius: '4px', fontSize: '0.9rem' }}>
+                                        {lang === 'ar' ? 'تم إرسال رسالتك بنجاح. سنتواصل معك قريباً.' : 'Message sent successfully. We will contact you soon.'}
+                                    </div>
+                                )}
+                                {status === 'error' && (
+                                    <div style={{ padding: '1rem', background: '#f8d7da', color: '#721c24', borderRadius: '4px', fontSize: '0.9rem' }}>
+                                        {lang === 'ar' ? 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة.' : 'An error occurred. Please try again or contact us directly.'}
+                                    </div>
+                                )}
+
+                                <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start', opacity: sending ? 0.7 : 1 }} disabled={sending}>
+                                    {sending ? (lang === 'ar' ? 'جاري الإرسال...' : 'Sending...') : t.contact.form.submit}
+                                </button>
                             </form>
                         </motion.div>
                         <motion.div variants={fadeInUp}>

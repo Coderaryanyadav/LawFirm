@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import type { Language } from './data/content';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
@@ -9,7 +10,10 @@ import { Lawyers } from './pages/Lawyers';
 import { Contact } from './pages/Contact';
 import { Blogs } from './pages/Blogs';
 import { Terms } from './pages/Terms';
+import { LawyerProfile } from './pages/LawyerProfile';
 import './App.css';
+
+
 
 function App() {
   const [lang, setLang] = useState<Language>('en');
@@ -21,19 +25,31 @@ function App() {
 
   return (
     <BrowserRouter>
+      <div className="noise-overlay"></div>
       <Layout lang={lang} setLang={setLang}>
-        <Routes>
-          <Route path="/" element={<Home lang={lang} />} />
-          <Route path="/about" element={<About lang={lang} />} />
-          <Route path="/practice-areas" element={<PracticeAreas lang={lang} />} />
-          <Route path="/lawyers" element={<Lawyers lang={lang} />} />
-          <Route path="/contact" element={<Contact lang={lang} />} />
-          <Route path="/blogs" element={<Blogs lang={lang} />} />
-          <Route path="/terms" element={<Terms lang={lang} />} />
-        </Routes>
+        <RoutesContainer lang={lang} />
       </Layout>
     </BrowserRouter>
   );
 }
+
+const RoutesContainer = ({ lang }: { lang: Language }) => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home lang={lang} />} />
+        <Route path="/about" element={<About lang={lang} />} />
+        <Route path="/practice-areas" element={<PracticeAreas lang={lang} />} />
+        <Route path="/lawyers" element={<Lawyers lang={lang} />} />
+        <Route path="/contact" element={<Contact lang={lang} />} />
+        <Route path="/blogs" element={<Blogs lang={lang} />} />
+        <Route path="/terms" element={<Terms lang={lang} />} />
+        <Route path="/lawyer/:id" element={<LawyerProfile lang={lang} />} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 export default App;
