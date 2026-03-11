@@ -11,9 +11,8 @@ import { Contact } from './pages/Contact';
 import { Blogs } from './pages/Blogs';
 import { Terms } from './pages/Terms';
 import { LawyerProfile } from './pages/LawyerProfile';
+import { Preloader } from './components/Preloader';
 import './App.css';
-
-
 
 function App() {
   const [lang, setLang] = useState<Language>('en');
@@ -25,6 +24,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Preloader lang={lang} />
       <div className="noise-overlay"></div>
       <Layout lang={lang} setLang={setLang}>
         <RoutesContainer lang={lang} />

@@ -16,7 +16,6 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
         setMobileMenuOpen(false);
     }, [location.pathname]);
 
-    // Command Center Keyboard Shortcut (Cmd+K)
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -30,115 +29,83 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
 
     return (
         <div className="app-wrapper">
-            <TopBar lang={lang} />
-            <TriageModal isOpen={isTriageOpen} onClose={() => setIsTriageOpen(false)} lang={lang} />
+            <header className="header-wrapper">
+                <TopBar lang={lang} />
+                <nav className="navbar">
+                    <div className="container nav-inner">
+                        <Link to="/" className="nav-brand">
+                            <div className="brand-main">{t.brand}</div>
+                            <div className="brand-sub">{lang === 'ar' ? 'محامون ومستشارون قانونيون' : 'ADVOCATES & LEGAL CONSULTANTS'}</div>
+                        </Link>
 
-            {/* Navbar */}
-            <nav className="navbar">
-                <div className="container nav-inner">
-                    <Link to="/" className="nav-brand">
-                        <div className="brand-main">{t.brand}</div>
-                        <div className="brand-sub">{t.nav.lawyers}</div>
-                    </Link>
+                        <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+                            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>{t.nav.home}</Link>
+                            <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>{t.nav.about}</Link>
+                            <Link to="/lawyers" className={`nav-link ${location.pathname === '/lawyers' ? 'active' : ''}`}>{t.nav.lawyers}</Link>
+                            <Link to="/practice-areas" className={`nav-link ${location.pathname === '/practice-areas' ? 'active' : ''}`}>{t.nav.practice}</Link>
+                            <Link to="/blogs" className={`nav-link ${location.pathname === '/blogs' ? 'active' : ''}`}>{t.nav.blogs}</Link>
+                            <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>{t.nav.contact}</Link>
 
-                    <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-                        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>{t.nav.home}</Link>
-                        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>{t.nav.about}</Link>
-                        <Link to="/lawyers" className={`nav-link ${location.pathname === '/lawyers' ? 'active' : ''}`}>{t.nav.lawyers}</Link>
-                        <Link to="/practice-areas" className={`nav-link ${location.pathname === '/practice-areas' ? 'active' : ''}`}>{t.nav.practice}</Link>
-                        <Link to="/blogs" className={`nav-link ${location.pathname === '/blogs' ? 'active' : ''}`}>{t.nav.blogs}</Link>
-                        <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>{t.nav.contact}</Link>
+                            <div className="lang-switch">
+                                <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</button>
+                                <span style={{ color: 'rgba(255,255,255,0.1)' }}>|</span>
+                                <button className={`lang-btn ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')}>عربي</button>
+                            </div>
 
-                        <div className="lang-switch">
-                            <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</button>
-                            <span style={{ color: 'var(--border-color)' }}>|</span>
-                            <button className={`lang-btn ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')}>عربي</button>
+                            <button onClick={() => setIsTriageOpen(true)} className="btn-book">
+                                {lang === 'ar' ? 'احجز الآن' : 'BOOK NOW'}
+                            </button>
                         </div>
-
-                        <button
-                            onClick={() => setIsTriageOpen(true)}
-                            style={{
-                                background: '#000',
-                                color: '#fff',
-                                padding: '0.8rem 1.5rem',
-                                fontSize: '0.8rem',
-                                fontWeight: 700,
-                                letterSpacing: '1px',
-                                border: '1px solid #333',
-                                marginLeft: '1rem'
-                            }}
-                        >
-                            {lang === 'ar' ? 'احجز الآن' : 'BOOK NOW'}
-                        </button>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </header>
+
+            <TriageModal isOpen={isTriageOpen} onClose={() => setIsTriageOpen(false)} lang={lang} />
 
             <main className="main-content">
                 {children}
             </main>
 
-            {/* Footer - High End Black & White Theme */}
-            <footer className="footer" style={{ padding: '6rem 0 3rem 0', background: '#000000', color: '#ffffff', borderTop: 'none' }}>
+            <footer className="footer" style={{ padding: '8rem 0 4rem 0', background: '#000', color: '#fff', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                 <div className="container">
-                    <div className="grid grid-cols-4 mb-12" style={{ gap: '3rem' }}>
-                        <div>
-                            <h2 className="footer-heading" style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', color: '#ffffff', marginBottom: '1.5rem', letterSpacing: '1px' }}>{t.brand}</h2>
-                            <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>{t.footer.desc}</p>
+                    <div className="grid grid-cols-4" style={{ gap: '4rem', marginBottom: '6rem' }}>
+                        <div style={{ gridColumn: 'span 1' }}>
+                            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', marginBottom: '2rem' }}>{t.brand}</h2>
+                            <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.8 }}>{t.footer.desc}</p>
                         </div>
 
                         <div>
-                            <h3 className="footer-heading" style={{ color: '#ffffff', marginBottom: '2rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Links</h3>
-                            <ul className="footer-links" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                <li><Link to="/about" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>About Us</span> <span>&rarr;</span></Link></li>
-                                <li><Link to="/lawyers" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Lawyers</span> <span>&rarr;</span></Link></li>
-                                <li><button onClick={() => setIsTriageOpen(true)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease', width: '100%', cursor: 'pointer' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Book Your Consultation</span> <span>&rarr;</span></button></li>
-                                <li><Link to="/practice-areas" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Areas Of Practice</span> <span>&rarr;</span></Link></li>
-                                <li><Link to="/blogs" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}><span>Legal Blogs</span> <span>&rarr;</span></Link></li>
+                            <h3 style={{ fontSize: '0.8rem', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '2.5rem', opacity: 0.4 }}>Navigation</h3>
+                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                                <li><Link to="/about" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>About Us</Link></li>
+                                <li><Link to="/lawyers" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Our Team</Link></li>
+                                <li><Link to="/practice-areas" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Expertise</Link></li>
+                                <li><Link to="/blogs" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Insights</Link></li>
                             </ul>
                         </div>
 
                         <div>
-                            <h3 className="footer-heading" style={{ color: '#ffffff', marginBottom: '2rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Our Services</h3>
-                            <ul className="footer-links" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                {[
-                                    "Enforcement Of Judgments",
-                                    "Bankruptcy Cases",
-                                    "Insolvency Cases",
-                                    "Business Issues",
-                                    "Criminal Cases"
-                                ].map((srv, i) => (
-                                    <li key={i}>
-                                        <Link to="/practice-areas" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }} onMouseOver={(e: any) => e.currentTarget.style.color = '#fff'} onMouseOut={(e: any) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}>
-                                            <span>{srv}</span> <span>&rarr;</span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            <h3 style={{ fontSize: '0.8rem', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '2.5rem', opacity: 0.4 }}>Contact</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: 'rgba(255,255,255,0.6)' }}>
+                                <span>+971 56 406 6060</span>
+                                <span>support@lawservices.ae</span>
+                                <p style={{ lineHeight: 1.6 }}>Dubai, Deira, Port Said, Building Business Point</p>
+                            </div>
                         </div>
 
                         <div>
-                            <h3 className="footer-heading" style={{ color: '#ffffff', marginBottom: '2rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem' }}>Contact Us</h3>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    <span dir="ltr" style={{ color: '#fff', fontSize: '1.2rem' }}>+971 56 406 6060</span>
-                                    <span style={{}}>support@lawservices.ae</span>
-                                </div>
-                                <div>
-                                    <p style={{ margin: 0, lineHeight: 1.6 }}>Dubai, Deira, Port Said, Building Business Point</p>
-                                </div>
-                                <div>
-                                    <p style={{ margin: 0, lineHeight: 1.6 }}>Sharjah, Al Mamzar Corniche Street, Tower of India</p>
-                                </div>
+                            <h3 style={{ fontSize: '0.8rem', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '2.5rem', opacity: 0.4 }}>Connect</h3>
+                            <div style={{ display: 'flex', gap: '1.5rem' }}>
+                                <a href="#" style={{ color: '#fff', opacity: 0.5 }}>FB</a>
+                                <a href="#" style={{ color: '#fff', opacity: 0.5 }}>TW</a>
+                                <a href="#" style={{ color: '#fff', opacity: 0.5 }}>IG</a>
                             </div>
                         </div>
                     </div>
 
-                    <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.5)' }}>
+                    <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'rgba(255,255,255,0.3)' }}>
                         <div>{t.footer.rights}</div>
-                        <div>
-                            <span style={{ padding: '0.4rem 1rem', background: '#ffffff', color: '#000000', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase' }}>{t.footer.bubble}</span>
-                        </div>
+                        <div style={{ textTransform: 'uppercase', letterSpacing: '2px' }}>{t.footer.bubble}</div>
                     </div>
                 </div>
             </footer>
