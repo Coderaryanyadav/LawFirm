@@ -25,7 +25,6 @@ function App() {
   return (
     <BrowserRouter>
       <Preloader lang={lang} />
-      <div className="noise-overlay"></div>
       <Layout lang={lang} setLang={setLang}>
         <RoutesContainer lang={lang} />
       </Layout>
@@ -33,6 +32,7 @@ function App() {
   );
 }
 
+// FIX: AnimatePresence only here, NOT in Layout.tsx
 const RoutesContainer = ({ lang }: { lang: Language }) => {
   const location = useLocation();
 
