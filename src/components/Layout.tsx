@@ -26,30 +26,32 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
     }, []);
 
     return (
-        <div className="app-wrapper">
-            <header className="header-wrapper">
+        <div className="app-shell">
+            <div className="noise-texture"></div>
+
+            <header className="header-system">
                 <TopBar lang={lang} />
                 <nav className="navbar">
-                    <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                         <Link to="/" className="nav-brand">
-                            <span className="brand-main">{t.brand}</span>
-                            <span className="brand-sub">{lang === 'ar' ? 'محامون ومستشارون قانونيون' : 'ADVOCATES & LEGAL CONSULTANTS'}</span>
+                            <span className="brand-title">{t.brand}</span>
+                            <span className="brand-subtitle">{lang === 'ar' ? 'محامون ومستشارون قانونيون' : 'Advocates & Legal Consultants'}</span>
                         </Link>
 
-                        <div className="nav-links">
-                            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>{t.nav.home}</Link>
-                            <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>{t.nav.about}</Link>
-                            <Link to="/lawyers" className={`nav-link ${location.pathname === '/lawyers' ? 'active' : ''}`}>{t.nav.lawyers}</Link>
-                            <Link to="/practice-areas" className={`nav-link ${location.pathname === '/practice-areas' ? 'active' : ''}`}>{t.nav.practice}</Link>
-                            <Link to="/blogs" className={`nav-link ${location.pathname === '/blogs' ? 'active' : ''}`}>{t.nav.blogs}</Link>
+                        <div className="nav-links-wrap">
+                            <Link to="/" className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>{t.nav.home}</Link>
+                            <Link to="/about" className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>{t.nav.about}</Link>
+                            <Link to="/lawyers" className={`nav-item ${location.pathname === '/lawyers' ? 'active' : ''}`}>{t.nav.lawyers}</Link>
+                            <Link to="/practice-areas" className={`nav-item ${location.pathname === '/practice-areas' ? 'active' : ''}`}>{t.nav.practice}</Link>
+                            <Link to="/blogs" className={`nav-item ${location.pathname === '/blogs' ? 'active' : ''}`}>{t.nav.blogs}</Link>
 
-                            <div className="lang-switch" style={{ marginLeft: '1rem' }}>
-                                <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</button>
-                                <button className={`lang-btn ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')}>AR</button>
+                            <div style={{ display: 'flex', gap: '1.5rem', marginLeft: '1rem', paddingLeft: '2rem', borderLeft: '1px solid var(--border)' }}>
+                                <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')} style={{ background: 'none', border: 'none', color: lang === 'en' ? 'var(--gold)' : 'var(--white-muted)', fontWeight: 900, cursor: 'pointer', fontSize: '0.75rem' }}>EN</button>
+                                <button className={`lang-btn ${lang === 'ar' ? 'active' : ''}`} onClick={() => setLang('ar')} style={{ background: 'none', border: 'none', color: lang === 'ar' ? 'var(--gold)' : 'var(--white-muted)', fontWeight: 900, cursor: 'pointer', fontSize: '0.75rem' }}>AR</button>
                             </div>
 
-                            <button onClick={() => setIsTriageOpen(true)} className="btn-book">
-                                BOOK NOW
+                            <button onClick={() => setIsTriageOpen(true)} className="btn-primary">
+                                {lang === 'ar' ? 'احجز الآن' : 'BOOK NOW'}
                             </button>
                         </div>
                     </div>
@@ -58,49 +60,46 @@ export const Layout = ({ children, lang, setLang }: { children: React.ReactNode,
 
             <TriageModal isOpen={isTriageOpen} onClose={() => setIsTriageOpen(false)} lang={lang} />
 
-            <main className="main-content">
+            <main style={{ paddingTop: 'calc(var(--nav-height) + var(--top-bar-height))' }}>
                 {children}
             </main>
 
-            <footer className="footer" style={{ padding: '10rem 0 5rem 0', background: '#000', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <footer style={{ padding: '10rem 0 5rem 0', background: '#020202', borderTop: '1px solid var(--border)' }}>
                 <div className="container">
-                    <div className="grid grid-cols-3" style={{ gap: '8rem', marginBottom: '8rem' }}>
+                    <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8rem' }}>
                         <div>
-                            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', marginBottom: '2.5rem', fontWeight: 800 }}>{t.brand}</h2>
-                            <p style={{ color: 'rgba(255,255,255,0.4)', lineHeight: 1.8, fontSize: '1.1rem' }}>{t.footer.desc}</p>
+                            <div className="brand-title" style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>{t.brand}</div>
+                            <div className="brand-subtitle" style={{ marginBottom: '3rem' }}>{lang === 'ar' ? 'الاستشارات القانونية' : 'Legal Expertise'}</div>
+                            <p style={{ color: 'var(--white-muted)', lineHeight: 1.8 }}>{t.footer.desc}</p>
                         </div>
 
                         <div>
-                            <h3 style={{ fontSize: '0.8rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '3rem', opacity: 0.3 }}>Firm</h3>
-                            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                                <li><Link to="/about" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '1rem' }}>Our Legacy</Link></li>
-                                <li><Link to="/lawyers" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '1rem' }}>Elite Team</Link></li>
-                                <li><Link to="/practice-areas" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '1rem' }}>Expertise</Link></li>
-                                <li><Link to="/blogs" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '1rem' }}>Insights</Link></li>
-                            </ul>
+                            <div className="section-label" style={{ marginBottom: '3rem' }}>Navigation</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                                <Link to="/about" style={{ color: 'var(--white-muted)', textDecoration: 'none' }}>Legacy</Link>
+                                <Link to="/lawyers" style={{ color: 'var(--white-muted)', textDecoration: 'none' }}>Attorneys</Link>
+                                <Link to="/practice-areas" style={{ color: 'var(--white-muted)', textDecoration: 'none' }}>Practice</Link>
+                                <Link to="/blogs" style={{ color: 'var(--white-muted)', textDecoration: 'none' }}>Insights</Link>
+                            </div>
                         </div>
 
                         <div>
-                            <h3 style={{ fontSize: '0.8rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '3rem', opacity: 0.3 }}>Global Headquarters</h3>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', color: 'rgba(255,255,255,0.5)', fontSize: '1.1rem' }}>
-                                <div>
-                                    <p style={{ color: '#fff', fontWeight: 700, marginBottom: '0.5rem' }}>DUBAI</p>
-                                    <p>Business Point, Port Said, Deira</p>
-                                </div>
-                                <div>
-                                    <p style={{ color: '#fff', fontWeight: 700, marginBottom: '0.5rem' }}>CONTACT</p>
-                                    <p>+971 56 406 6060</p>
-                                    <p>support@lawservices.ae</p>
-                                </div>
+                            <div className="section-label" style={{ marginBottom: '3rem' }}>Headquarters</div>
+                            <div style={{ color: 'var(--white-muted)', lineHeight: 2 }}>
+                                <div style={{ color: '#fff', fontWeight: 800, marginBottom: '0.5rem' }}>DUBAI</div>
+                                <p>Business Point, Port Said, Deira</p>
+                                <div style={{ marginTop: '2rem', color: '#fff', fontWeight: 800, marginBottom: '0.5rem' }}>CONTACT</div>
+                                <p>+971 56 406 6060</p>
+                                <p>support@lawservices.ae</p>
                             </div>
                         </div>
                     </div>
 
-                    <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    <div style={{ marginTop: '8rem', paddingTop: '4rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', color: 'rgba(255,255,255,0.2)', fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase' }}>
                         <div>© 2026 {t.brand}. All Strategic Rights Reserved.</div>
                         <div style={{ display: 'flex', gap: '3rem' }}>
                             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy</a>
-                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Legal</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Terms</a>
                         </div>
                     </div>
                 </div>
