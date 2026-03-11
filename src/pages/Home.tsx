@@ -26,7 +26,7 @@ export const Home = ({ lang }: { lang: Language }) => {
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
 
-            {/* ── HERO — static, no cycling ── */}
+            {/* ── HERO ── */}
             <section style={{ position: 'relative', minHeight: '85vh', display: 'flex', alignItems: 'center', background: '#111', overflow: 'hidden' }}>
                 <motion.img
                     src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&q=80&w=1800"
@@ -36,7 +36,6 @@ export const Home = ({ lang }: { lang: Language }) => {
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.7) 50%, transparent)' }} />
 
                 <div className="container" style={{ position: 'relative', zIndex: 5, textAlign: lang === 'ar' ? 'right' : 'left' }}>
-                    {/* Pill badge */}
                     <div style={{
                         display: 'inline-block', border: '1px solid rgba(255,255,255,0.35)',
                         borderRadius: '100px', padding: '0.45rem 1.4rem',
@@ -58,13 +57,13 @@ export const Home = ({ lang }: { lang: Language }) => {
                         {t.hero.desc}
                     </p>
 
-                    <Link to="/contact" className="btn btn-primary">{t.hero.cta}</Link>
+                    <Link to="/contact" className="btn" style={{ background: 'var(--gold)', color: '#fff', border: 'none' }}>{t.hero.cta}</Link>
                 </div>
             </section>
 
             {/* ── STATS BAR ── */}
             <section style={{ background: '#000', borderBottom: '1px solid #1a1a1a' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+                <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
                     {t.stats.map((stat, i) => (
                         <motion.div
                             key={i}
@@ -84,7 +83,7 @@ export const Home = ({ lang }: { lang: Language }) => {
                 </div>
             </section>
 
-            {/* ── EXPERTISE — Numbered List ── */}
+            {/* ── EXPERTISE ── */}
             <section style={{ background: '#0a0a0a', padding: '6rem 0' }}>
                 <div className="container">
                     <div style={{ marginBottom: '4rem' }}>
@@ -124,7 +123,44 @@ export const Home = ({ lang }: { lang: Language }) => {
                 </div>
             </section>
 
-            {/* ── ABOUT ── */}
+            {/* ── SERVICE CATEGORIES ── */}
+            <section className="section bg-main">
+                <div className="container">
+                    <div className="text-center mb-12">
+                        <h2 className="section-title">
+                            {lang === 'ar' ? 'خدماتنا القانونية لجميع الفئات' : 'Our legal services are for all categories'}
+                        </h2>
+                    </div>
+                    <div className="grid grid-cols-3">
+                        {t.about.boxes.map((box, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                whileHover={{ boxShadow: 'var(--shadow-md)', y: -4 }}
+                                style={{ padding: '3.5rem 2.5rem', border: '1px solid var(--border-color)', textAlign: 'center', transition: 'all var(--transition)', background: '#fff' }}
+                            >
+                                <div style={{ width: '64px', height: '64px', margin: '0 auto 2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', borderRadius: '50%' }}>
+                                    {i === 0 && (
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                                    )}
+                                    {i === 1 && (
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.5"><rect x="4" y="2" width="16" height="20" rx="2" /><path d="M9 22v-4h6v4" /><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01" /></svg>
+                                    )}
+                                    {i === 2 && (
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.5"><path d="M3 21h18" /><path d="M5 21V7l7-4 7 4v14" /><path d="M9 21v-4h6v4" /><path d="M3 7h18" /></svg>
+                                    )}
+                                </div>
+                                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--secondary)', fontWeight: 600 }}>{box.title}</h3>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── ABOUT PART ── */}
             <section className="section bg-offset">
                 <div className="container">
                     <div className="grid grid-cols-2" style={{ gap: '6rem', alignItems: 'center' }}>
@@ -173,42 +209,7 @@ export const Home = ({ lang }: { lang: Language }) => {
                 </div>
             </div>
 
-            {/* ── SERVICE CATEGORIES ── */}
-            <section className="section">
-                <div className="container">
-                    <div className="text-center mb-12">
-                        <h2 className="section-title">{lang === 'ar' ? 'خدماتنا القانونية لجميع الفئات' : 'Our legal services are for all categories'}</h2>
-                    </div>
-                    <div className="grid grid-cols-3">
-                        {t.about.boxes.map((box, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                whileHover={{ boxShadow: 'var(--shadow-md)', y: -4 }}
-                                style={{ padding: '3.5rem 2.5rem', border: '1px solid var(--border-color)', textAlign: 'center', transition: 'all var(--transition)', background: '#fff' }}
-                            >
-                                <div style={{ width: '64px', height: '64px', margin: '0 auto 2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', borderRadius: '50%' }}>
-                                    {i === 0 && (
-                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-                                    )}
-                                    {i === 1 && (
-                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.5"><rect x="4" y="2" width="16" height="20" rx="2" /><path d="M9 22v-4h6v4" /><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01" /></svg>
-                                    )}
-                                    {i === 2 && (
-                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="1.5"><path d="M3 21h18" /><path d="M5 21V7l7-4 7 4v14" /><path d="M9 21v-4h6v4" /><path d="M3 7h18" /></svg>
-                                    )}
-                                </div>
-                                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--secondary)', fontWeight: 600 }}>{box.title}</h3>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* ── LANGUAGES / SLOGAN ── */}
+            {/* ── LANGUAGES ── */}
             <section className="section bg-offset">
                 <div className="container">
                     <div className="text-center mb-12">
@@ -232,7 +233,7 @@ export const Home = ({ lang }: { lang: Language }) => {
                     <span className="section-subtitle" style={{ color: 'rgba(255,255,255,0.4)' }}>{t.contact.titleSub}</span>
                     <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#fff', marginBottom: '1.5rem', fontWeight: 600 }}>{t.contact.title}</h2>
                     <p style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '600px', margin: '0 auto 3rem', lineHeight: 1.8 }}>{t.contact.desc}</p>
-                    <Link to="/contact" className="btn" style={{ background: '#fff', color: '#000', border: '1px solid #fff' }}>
+                    <Link to="/contact" className="btn" style={{ background: 'var(--gold)', color: '#fff', border: 'none' }}>
                         {t.nav.appoint}
                     </Link>
                 </div>

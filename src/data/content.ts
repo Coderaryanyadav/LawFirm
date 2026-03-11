@@ -57,7 +57,26 @@ export const content = {
             mission: {
                 title: "Our Mission",
                 desc: "We believe that the legal profession is not just a profession, but an honest guardianship of rights, and a protective shield for freedoms. It is conscious judiciary, the essential partner in the justice system, and the real motive that guarantees the right for every individual."
-            }
+            },
+            milestones: [
+                { year: '2004', text: 'Foundation of the firm in Dubai' },
+                { year: '2010', text: 'Expansion and opening of the Sharjah branch' },
+                { year: '2016', text: 'Legal Leadership Award in the Middle East' },
+                { year: '2020', text: 'Launch of the Smart Consultation platform' },
+                { year: '2024', text: 'Leading in global acquisition solutions' }
+            ]
+        },
+        blogs: {
+            title: "Legal Insights",
+            subtitle: "Legal insights and analysis from our specialized team",
+            items: [
+                { title: 'UAE Corporate Tax Law: What You Need to Know', category: 'Corporate', date: 'Oct 12, 2023', read: '5 min read', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80' },
+                { title: 'Understanding the New Labor Law in the UAE', category: 'Employment', date: 'Sep 28, 2023', read: '7 min read', img: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80' },
+                { title: 'How to Navigate Real Estate Disputes in Dubai', category: 'Real Estate', date: 'Sep 15, 2023', read: '4 min read', img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80' },
+                { title: 'A Guide to Intellectual Property Protection in the GCC', category: 'IP', date: 'Aug 30, 2023', read: '6 min read', img: 'https://images.unsplash.com/photo-1505664159623-2818961730e6?auto=format&fit=crop&q=80' },
+                { title: 'Resolving Construction Disputes Through Arbitration', category: 'Arbitration', date: 'Aug 12, 2023', read: '8 min read', img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80' },
+                { title: 'Key Legal Considerations for Tech Startups in Abu Dhabi', category: 'Business', date: 'Jul 22, 2023', read: '5 min read', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80' }
+            ]
         },
         languages: {
             titleSub: "Slogan",
@@ -153,7 +172,26 @@ export const content = {
             mission: {
                 title: "رسالتنا",
                 desc: "نؤمن بأن المحاماة ليست مجرد مهنة، بل حِرَاسَةٌ أمينة للحقوق، ودرعٌ واقٍ للحريات. إنها القضاء الواعي، والشريك الأساسي في منظومة العدالة، والدافع الحقيقي الذي يضمن الحق لكل فرد."
-            }
+            },
+            milestones: [
+                { year: '2004', text: 'تأسيس المكتب في قلب دبي' },
+                { year: '2010', text: 'التوسع وفتح فرع الشارقة' },
+                { year: '2016', text: 'جائزة الريادة القانونية في الشرق الأوسط' },
+                { year: '2020', text: 'إطلاق منصة الاستشارات الذكية' },
+                { year: '2024', text: 'الريادة في حلول الاستحواذات العالمية' }
+            ]
+        },
+        blogs: {
+            title: "رؤى قانونية",
+            subtitle: "رؤى قانونية وتحليلات معمقة من فريقنا المتخصص",
+            items: [
+                { title: 'قانون ضريبة الشركات في الإمارات الدليل الشامل', category: 'الشركات', date: '12 أكتوبر 2023', read: '5 دقائق', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80' },
+                { title: 'فهم قانون العمل الجديد والتعديلات الأخيرة', category: 'العمل', date: '28 سبتمبر 2023', read: '7 دقائق', img: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80' },
+                { title: 'كيفية التعامل مع المنازعات العقارية في دبي', category: 'العقارات', date: '15 سبتمبر 2023', read: '4 دقائق', img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80' },
+                { title: 'دليل حماية الملكية الفكرية في دول مجلس التعاون', category: 'الملكية الفكرية', date: '30 أغسطس 2023', read: '6 دقائق', img: 'https://images.unsplash.com/photo-1505664159623-2818961730e6?auto=format&fit=crop&q=80' },
+                { title: 'حل منازعات البناء من خلال التحكيم التجاري', category: 'التحكيم', date: '12 أغسطس 2023', read: '8 دقائق', img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80' },
+                { title: 'الاعتبارات القانونية للشركات الناشئة في أبوظبي', category: 'الأعمال', date: '22 يوليو 2023', read: '5 دقائق', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80' }
+            ]
         },
         languages: {
             titleSub: "شعارنا",

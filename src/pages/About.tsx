@@ -6,14 +6,6 @@ import { Link } from 'react-router-dom';
 export const About = ({ lang }: { lang: Language }) => {
     const t = content[lang];
 
-    const milestones = [
-        { year: '2004', text: lang === 'ar' ? 'تأسيس المكتب في قلب دبي' : 'Foundation of the firm in Dubai' },
-        { year: '2010', text: lang === 'ar' ? 'التوسع وفتح فرع الشارقة' : 'Expansion and opening of the Sharjah branch' },
-        { year: '2016', text: lang === 'ar' ? 'جائزة الريادة القانونية' : 'Legal Leadership Award in the Middle East' },
-        { year: '2020', text: lang === 'ar' ? 'إطلاق المنصة الرقمية' : 'Launch of the Smart Consultation platform' },
-        { year: '2024', text: lang === 'ar' ? 'الريادة في حلول الاستحواذات' : 'Leading in global acquisition solutions' }
-    ];
-
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
             {/* Page Header */}
@@ -32,14 +24,24 @@ export const About = ({ lang }: { lang: Language }) => {
             <section className="section">
                 <div className="container">
                     <div className="grid grid-cols-2" style={{ gap: '6rem', alignItems: 'center' }}>
-                        <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                        <motion.div
+                            className="mobile-full"
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
                             <span className="section-subtitle">{t.about.titleSub}</span>
                             <h2 className="section-title">{t.about.title}</h2>
                             <p style={{ lineHeight: 1.9, marginBottom: '1.5rem' }}>{t.about.p1}</p>
                             <p style={{ lineHeight: 1.9, color: 'var(--text-muted)', marginBottom: '2.5rem' }}>{t.about.p2}</p>
                             <Link to="/contact" className="btn btn-primary">{t.nav.appoint}</Link>
                         </motion.div>
-                        <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                        <motion.div
+                            className="mobile-full"
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
                             <div style={{ position: 'relative' }}>
                                 <div className="img-wrapper">
                                     <img
@@ -67,8 +69,8 @@ export const About = ({ lang }: { lang: Language }) => {
                         <span className="section-subtitle">{lang === 'ar' ? 'مسيرتنا' : 'Our Journey'}</span>
                         <h2 className="section-title">{lang === 'ar' ? 'محطات بارزة' : 'Key Milestones'}</h2>
                     </div>
-                    <div className="grid grid-cols-5" style={{ gridTemplateColumns: `repeat(${milestones.length}, 1fr)`, gap: '2rem' }}>
-                        {milestones.map((m, i) => (
+                    <div className="timeline-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2.5rem' }}>
+                        {t.about.milestones.map((m, i) => (
                             <motion.div
                                 key={i}
                                 initial={{ opacity: 0, y: 20 }}
